@@ -1,0 +1,26 @@
+<style>
+.characterLimit {
+	margin-left: 10px;
+	color:#999;
+}
+</style>
+<h3 class="pageContentHeadline">Kontakt</h3>
+<form name="form" id="contactForm" class="container">
+        <div class="row">
+                <label class="col-md-2">Voller Name :</label>
+                <input class="col-md-8" type="text" name="name" ng-model="contact.name" />
+        </div>
+        <div class="row">
+                <label class="col-md-2">E-Mail :</label>
+                <input class="col-md-8" type="email" name="email" ng-model="contact.email" />
+        </div>
+        <div class="row">
+                <label class="col-md-2" class="">Nachricht :</label>
+                <textarea class="col-md-8" name="message" ng-model="contact.message" character-limit></textarea>
+        </div>
+        <input type="submit" ng-click="send()" value="Senden" />
+        <div id="internalError" class="col-md-6">
+            Es ist ein unerwarteter Fehler aufgetreten.<br>
+            Bitte versuchen Sie es etwas später erneut.
+        </div>
+</form>
