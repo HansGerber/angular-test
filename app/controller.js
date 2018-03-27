@@ -99,12 +99,49 @@ controllers.contactError = function($scope) {
 
 };
 
-controllers.login = function($scope) {
-    
+controllers.login = function($scope, userService) {
+
+	$scope.user = {
+		name: '',
+		password: ''
+	}
+	
+	$scope.doLogin = function(user){
+		
+		if(userService.isLoggedIn()){
+                    alert("Schon angemeldet.");
+		} else {
+                    userService.login(
+                        user,
+                        function(response) {
+                            if(response.data.success === true){
+                                switch(response.data.key){
+                                    case 'OK':
+                                        userService.storeUserInSession(user);
+                                        alert("Anmeldung erfolgreich.");
+                                    break;
+                                }
+                            } else {
+                                switch(response.data.key){
+                                    case 'UserNotFound':
+                                        alert("Unbekannte Anmeldedaten.");
+                                    break;
+                                    default:
+                                        alert("Etwas ist schief gelaufen. Bitte versuchen sie es später erneut.");
+                                    break;
+                                }
+                            }
+                        },
+                        function(response) {
+                            console.log("Internal Error (" + response + ")");
+                        }
+                    );
+		}
+	}
 };
 
-controllers.tickets = function($scope) {
-
+controllers.tickets = function($scope, userService) {
+    
 };
 
 controllers.pageNotFound = function($scope) {
@@ -112,3 +149,4 @@ controllers.pageNotFound = function($scope) {
 };
 
 app.controller(controllers);
+

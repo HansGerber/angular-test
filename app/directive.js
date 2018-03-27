@@ -50,9 +50,9 @@ app.directive('loginForm', function() {
   return {
 	  
     template: '<form id="loginForm" class="container">' +
-            '<div class="row"><label class="col-md-2">Username/E-Mail *</label><input type="text" class="col-md-8" name="user" ng-model="login.user"></div>' +
-            '<div class="row"><label class="col-md-2">Password *</label><input type="password" class="col-md-8" name="password" ng-model="login.password"></div>' +
-            '<div class="row"><input type="submit" ng-click="login()" value="einloggen" /></div>' +
+            '<div class="row"><label class="col-md-2">Kundennummer *</label><input type="text" class="col-md-8" name="user" ng-model="user.name"></div>' +
+            '<div class="row"><label class="col-md-2">Passwort *</label><input type="password" class="col-md-8" name="password" ng-model="user.password"></div>' +
+            '<div class="row"><input type="submit" ng-click="doLogin(user)" value="einloggen" /></div>' +
         '</form>'
   };
 });
