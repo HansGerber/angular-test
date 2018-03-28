@@ -99,10 +99,10 @@ controllers.contactError = function($scope) {
 
 };
 
-controllers.login = function($scope, userService) {
+controllers.login = function($scope, userService, deepLinkService) {
 
 	$scope.user = {
-		name: '',
+		cid: '',
 		password: ''
 	}
 	
@@ -118,6 +118,7 @@ controllers.login = function($scope, userService) {
                                 switch(response.data.key){
                                     case 'OK':
                                         userService.storeUserInSession(user);
+                                        deepLinkService.redirectAfterLogin();
                                         alert("Anmeldung erfolgreich.");
                                     break;
                                 }
@@ -140,8 +141,8 @@ controllers.login = function($scope, userService) {
 	}
 };
 
-controllers.tickets = function($scope, userService) {
-    
+controllers.tickets = function($scope, $location, deepLinkService) {
+    deepLinkService.loginRedirect();
 };
 
 controllers.pageNotFound = function($scope) {

@@ -33,7 +33,7 @@
         } else {
             
             if($sqlRes = $c->query("select count(*) as count from $db.users
-                where cid='" . $loginData->name . "' and
+                where cid='" . $loginData->cid . "' and
                 password='" . md5($loginData->password) . "'")){
                 
                 $fetchedRes = $sqlRes->fetch_assoc();

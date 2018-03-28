@@ -24,8 +24,6 @@ app.factory("userService", function($http) {
 
 		isLoggedIn: function(){
 			
-                        console.log("isLoggedIn()", sessionStorage.getItem(this.sessionKey));
-                        
 			if(sessionStorage.getItem(this.sessionKey)){
 				return true;
 			}
@@ -42,5 +40,26 @@ app.factory("userService", function($http) {
                     sessionStorage.setItem(this.sessionKey, userData);
                 }
 	
+	}
+});
+
+app.factory("deepLinkService", function(userService, $location) {
+	
+	return {
+		
+	    loginRedirect: function() {
+                if(userService.isLoggedIn() === false){
+                    sessionStorage.setItem("referrer", $location.url());
+                    $location.path("login");
+                }
+            },
+	
+            redirectAfterLogin: function(){
+                if(sessionStorage.getItem("referrer")){
+                    var ref = sessionStorage.getItem("referrer");
+                    sessionStorage.removeItem("referrer");
+                    $location.path(ref);
+                }
+            }
 	}
 });

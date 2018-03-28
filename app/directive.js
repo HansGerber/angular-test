@@ -31,13 +31,13 @@ app.directive('ticketCount', function() {
         
         if("BKCleanApi" in window){
             
-            $http
-                .get(BKCleanApi.makePath("tickets", "ticketCount"))
-                .then(function(response) {
-                    $scope.countResult = (response.data.success === true ? response.data.detail.ticketCount : "Fehler beim ermitteln der Ticketanzahl. Bitte versuchen Sie es sp&auml;ter erneut.");
-                }
-            );
-        } else {
+                $http
+                    .get(BKCleanApi.makePath("tickets", "ticketCount"))
+                    .then(function(response) {
+                        $scope.countResult = (response.data.success === true ? response.data.detail.ticketCount : "Fehler beim ermitteln der Ticketanzahl. Bitte versuchen Sie es sp&auml;ter erneut.");
+                    }
+                );
+            } else {
             $scope.countResult = "Fehler beim ermitteln der Ticketanzahl. Bitte versuchen Sie es sp&auml;ter erneut.";
         }
     }],
@@ -50,7 +50,7 @@ app.directive('loginForm', function() {
   return {
 	  
     template: '<form id="loginForm" class="container">' +
-            '<div class="row"><label class="col-md-2">Kundennummer *</label><input type="text" class="col-md-8" name="user" ng-model="user.name"></div>' +
+            '<div class="row"><label class="col-md-2">Kundennummer *</label><input type="text" class="col-md-8" name="user" ng-model="user.cid"></div>' +
             '<div class="row"><label class="col-md-2">Passwort *</label><input type="password" class="col-md-8" name="password" ng-model="user.password"></div>' +
             '<div class="row"><input type="submit" ng-click="doLogin(user)" value="einloggen" /></div>' +
         '</form>'
