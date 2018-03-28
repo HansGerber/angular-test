@@ -33,7 +33,7 @@
                 '".$c->real_escape_string($contactData->name)."',
                 '".$c->real_escape_string($contactData->email)."',
                 '".$c->real_escape_string($contactData->message)."',
-                '".date("yyyy-mm-dd H:i:s")."'
+                '".date("y-m-d H:i:s")."'
             )")){
                 
                 $result["success"] = true;
