@@ -4,4 +4,4 @@
  * and open the template in the editor.
  */
 
-var app = angular.module("app", ['ngRoute']);
+var app = angular.module("app", ['ngRoute', 'angular-google-analytics']);

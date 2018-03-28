@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html lang="de" ng-app="app">
 	<head>
-                <!-- Global site tag (gtag.js) - Google Analytics -->
-                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80065119-4"></script>
-                <script>
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-
-                  gtag('config', 'UA-80065119-4');
-                </script>
 		<title ng-bind="pageTitle"></title>
                 <meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
                 <link rel="stylesheet" href="assets/css/bootstrap-override.css" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-route.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-animate.min.js"></script>
 	</head>
 	<body>
 		<div class="container-fluid" id="pageContainer">
@@ -46,13 +34,17 @@
 			<img src="assets/images/pageLoader.gif" />
 		</div>
 		
-		<script src="assets/js/custom-navi.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-route.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular-animate.min.js"></script>
 		<script src="app/api.js"></script>
+                <script src="app/service_google_analytics.js"></script>
 		<script src="app/module.js"></script>
 		<script src="app/config.js"></script>
 		<script src="app/directive.js"></script>
 		<script src="app/controller.js"></script>
 		<script src="app/service.js"></script>
+                <script src="assets/js/custom-navi.js"></script>
 		<script>
 			addEventListener("load", function() {
 				document.getElementById("pageLoadingOverlay").style.display="none";

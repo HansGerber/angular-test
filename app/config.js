@@ -61,3 +61,8 @@ app.config(function($routeProvider) {
 app.config(['$locationProvider', function($locationProvider) {
 	$locationProvider.hashPrefix('');
 }]);
+
+app.config(['AnalyticsProvider', function (AnalyticsProvider) {
+   // Add configuration code as desired
+   AnalyticsProvider.setAccount('UA-80065119-4');
+}]).run(['Analytics', function(Analytics) { }]);
