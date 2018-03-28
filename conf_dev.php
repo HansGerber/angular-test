@@ -5,7 +5,12 @@
 			"server" => "localhost",
 			"user" => "root",
 			"password" => "",
-			"db" => "bkclean_angular"
+			"db" => "bkclean_angular",
+			"tables" => array (
+				"users",
+				"contact",
+				"tickets"
+			),
 		),
 	);
 
