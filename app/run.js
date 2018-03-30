@@ -8,4 +8,8 @@ app.run(function($rootScope, deepLinkService) {
         });
     });
     
+    addEventListener("load", function() {
+        document.getElementById("pageLoadingOverlay").style.display="none";
+    }, false);
+    
 });
