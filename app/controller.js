@@ -1,17 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var controllers = {};
 
 controllers.home = function($scope, $http) {
-	
 };
 
 controllers.contact = function($scope, $http, $location) {
-	
+    
     function validate(contactData) {
 
         var result = {
@@ -92,11 +85,9 @@ controllers.contact = function($scope, $http, $location) {
 }
 
 controllers.contactSuccess = function($scope) {
-
 };
 
 controllers.contactError = function($scope) {
-
 };
 
 controllers.login = function($scope, userService, deepLinkService) {
@@ -141,7 +132,7 @@ controllers.login = function($scope, userService, deepLinkService) {
 	}
 };
 
-controllers.tickets = function($scope, $location, deepLinkService) {
+controllers.tickets = function($scope, deepLinkService) {
     deepLinkService.loginRedirect();
 };
 
