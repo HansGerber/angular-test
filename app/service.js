@@ -1,4 +1,4 @@
-app.factory("userService", function($http) {
+app.factory("userService", function($rootScope, $http) {
 	
 	return {
 		
@@ -13,9 +13,11 @@ app.factory("userService", function($http) {
 				user
 			).then(
 				function(response){
+                                    $rootScope.$emit("userService.login", "success");
                                     success(response);
 				},
 				function(response){
+                                    $rootScope.$emit("userService.login", "error");
                                     error(response);
 				}
 			);
@@ -32,6 +34,7 @@ app.factory("userService", function($http) {
 		
 		logout: function() {
                     if(this.isLoggedIn() === true){
+                        $rootScope.$emit("userService.logout", "success");
 			sessionStorage.removeItem(this.sessionKey);
                     }
 		},
@@ -77,6 +80,8 @@ app.factory("deepLinkService", function(userService, $location) {
                     var ref = sessionStorage.getItem("referrer");
                     sessionStorage.removeItem("referrer");
                     $location.path(ref);
+                } else {
+                    $location.path("/");
                 }
             }
 	}

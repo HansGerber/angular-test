@@ -1,10 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 app.config(function($routeProvider) {
     $routeProvider.when(
             '/',
@@ -40,6 +33,20 @@ app.config(function($routeProvider) {
                     controller:'login',
                     templateUrl:'views/login.htm',
                     title:'Login - BKClean'
+            }
+    ).when(
+            '/logout',
+            {
+                    controller:'logout',
+                    templateUrl:'views/logoutSuccess.htm',
+                    title:'Logout - BKClean'
+            }
+    ).when(
+            '/my-profile',
+            {
+                    controller:'myProfile',
+                    templateUrl:'views/myProfile.htm',
+                    title:'Mein Profil - BKClean'
             }
     ).when(
             '/tickets',

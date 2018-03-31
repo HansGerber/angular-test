@@ -90,7 +90,12 @@ controllers.contactSuccess = function($scope) {
 controllers.contactError = function($scope) {
 };
 
-controllers.login = function($scope, userService, deepLinkService) {
+controllers.login = function($scope, $location, userService, deepLinkService) {
+
+    if(userService.isLoggedIn() === true){
+        
+        $location.path("/");
+    } else {
 
 	$scope.user = {
 		cid: '',
@@ -130,7 +135,19 @@ controllers.login = function($scope, userService, deepLinkService) {
                     );
 		}
 	}
+    }
 };
+
+controllers.logout = function($scope, $timeout, $location, userService, deepLinkService) {
+    if(userService.isLoggedIn() === true){
+        userService.logout();
+    }
+    $location.path("/");
+};
+
+controllers.myProfile = function($scope, userService, deepLinkService) {
+    deepLinkService.loginRedirect();
+}
 
 controllers.tickets = function($scope, deepLinkService) {
     deepLinkService.loginRedirect();

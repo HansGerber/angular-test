@@ -57,13 +57,50 @@ app.directive('loginForm', function() {
   };
 });
 
+app.directive('naviUserSnippet', function() {
+    
+    return {
+        controller: function($scope, $rootScope, userService, $sce){
+            
+            if(userService.isLoggedIn()){
+                $scope.tmpl = '<a href="#/my-profile">Mein Profil</a>' +
+                    '<a href="#/tickets">Tickets</a>' +
+                    '<a href="#/logout">Logout</a>';
+            } else {
+                $scope.tmpl = '<a href="#/login">Login</a>';
+            }
+            
+            $scope.renderHTML = function(html){
+                return $sce.trustAsHtml(html);
+            }
+            
+            $rootScope.$on('userService.login', function(event, loginResult){
+                
+                $scope.tmpl = '<a href="#/my-profile">Mein Profil</a>' +
+                    '<a href="#/tickets">Tickets</a>' +
+                    '<a href="#/logout">Logout</a>';
+            
+            });
+            
+            $rootScope.$on('userService.logout', function(event, logoutResult){
+                
+                $scope.tmpl = '<a href="#/login">Login</a>';
+                
+            });
+        },
+        template: function() {
+            return '<div ng-bind-html="renderHTML(tmpl)"></div>';
+        }
+    };
+});
+
 app.directive('copyrightNote', function() {
   
   return {
-	  controller: ['$scope', function copyrightNoteController($scope) {
-		  var year = new Date().getFullYear();
-		  $scope.date = (year <= 2018 ? '' : ' - ' + year);
-	  }],
-    template: '<div id="copyrightNote">&copy; 2018{{ date }}</div>'
+        controller: ['$scope', function copyrightNoteController($scope) {
+            var year = new Date().getFullYear();
+            $scope.date = (year <= 2018 ? '' : ' - ' + year);
+        }],
+        template: '<div id="copyrightNote">&copy; 2018{{ date }}</div>'
   };
 });
