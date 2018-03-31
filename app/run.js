@@ -4,6 +4,8 @@ app.run(function($rootScope, deepLinkService) {
         deepLinkService.resetReferrer({
             excludeUrls: ['/login']
         });
+        
+        closeMobileNavi();
     });
     
     addEventListener("load", function() {

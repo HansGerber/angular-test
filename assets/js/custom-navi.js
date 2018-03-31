@@ -26,11 +26,11 @@ function initNavi(){
 		var navLinks = document.getElementById("navLinks");
 		navLinks.classList.toggle("open");
 	}, false);
-        for(var i = 0; i < navLinks.length; i++){
+        /*for(var i = 0; i < navLinks.length; i++){
             navLinks[i].addEventListener("click", function() {
                 closeMobileNavi();
             }, false);
-        }
+        }*/
 }
 
 function checkNavi() {
