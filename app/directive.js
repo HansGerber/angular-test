@@ -101,6 +101,6 @@ app.directive('copyrightNote', function() {
             var year = new Date().getFullYear();
             $scope.date = (year <= 2018 ? '' : ' - ' + year);
         }],
-        template: '<div id="copyrightNote">&copy; 2018{{ date }}</div>'
+        template: '<div id="copyrightNote">&copy; 2018{{ date }} by BK</div>'
   };
 });
