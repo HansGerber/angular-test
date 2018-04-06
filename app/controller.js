@@ -97,44 +97,43 @@ controllers.login = function($scope, $location, userService, deepLinkService) {
         $location.path("/");
     } else {
 
-	$scope.user = {
-		cid: '',
-		password: ''
-	}
-	
-	$scope.doLogin = function(user){
-		
-		if(userService.isLoggedIn()){
-                    alert("Schon angemeldet.");
-		} else {
-                    userService.login(
-                        user,
-                        function(response) {
-                            if(response.data.success === true){
-                                switch(response.data.key){
-                                    case 'OK':
-                                        userService.storeUserInSession(user);
-                                        deepLinkService.redirectAfterLogin();
-                                        alert("Anmeldung erfolgreich.");
-                                    break;
-                                }
-                            } else {
-                                switch(response.data.key){
-                                    case 'UserNotFound':
-                                        alert("Unbekannte Anmeldedaten.");
-                                    break;
-                                    default:
-                                        alert("Etwas ist schief gelaufen. Bitte versuchen sie es später erneut.");
-                                    break;
-                                }
-                            }
-                        },
-                        function(response) {
-                            console.log("Internal Error (" + response + ")");
-                        }
-                    );
+		$scope.user = {
+			cid: '',
+			password: ''
 		}
-	}
+		
+		$scope.doLogin = function(user){
+			
+			if(userService.isLoggedIn()){
+						alert("Schon angemeldet.");
+			} else {
+						userService.login(
+							user,
+							function(response) {
+								if(response.data.success === true){
+									switch(response.data.key){
+										case 'OK':
+											deepLinkService.redirectAfterLogin();
+											alert("Anmeldung erfolgreich.");
+										break;
+									}
+								} else {
+									switch(response.data.key){
+										case 'UserNotFound':
+											alert("Unbekannte Anmeldedaten.");
+										break;
+										default:
+											alert("Etwas ist schief gelaufen. Bitte versuchen sie es später erneut.");
+										break;
+									}
+								}
+							},
+							function(response) {
+								console.log("Internal Error" ,response);
+							}
+						);
+			}
+		}
     }
 };
 
@@ -149,8 +148,11 @@ controllers.myProfile = function($scope, userService, deepLinkService) {
     deepLinkService.loginRedirect();
 }
 
-controllers.tickets = function($scope, deepLinkService) {
+controllers.tickets = function($scope, $route, deepLinkService) {
     deepLinkService.loginRedirect();
+    $scope.refresh = function() {
+        $route.reload();
+    }
 };
 
 controllers.pageNotFound = function($scope) {

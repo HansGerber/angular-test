@@ -1,11 +1,11 @@
 <?php
     require_once "../../conf.php";
-
-    $request = json_decode(file_get_contents('php://input'));
 	
-    //var_dump($request);die("".__LINE__);
+    $requestBody = json_decode(file_get_contents('php://input'));
 	
-    $dbResult = null;
+    //var_dump($requestBody);die("".__LINE__);
+	
+    $action = @$_GET["action"];
 
     $response = array(
         "success" => false,
@@ -13,55 +13,72 @@
         "detail" => ""
     );
     
-    function getUserData($loginData){
-        
-        global $_global_conf;
+    $sql = $_global_conf["sql"];
+    $db = $sql["db"];
+    $c = new mysqli(
+                    $sql["server"],
+                    $sql["user"],
+                    $sql["password"]
+    );
+
+    function checkUserLoginAndGetID($loginData){
+
+        global $c, $db;
         $result = array("success" => false, "key" => "", "detail" => "");
-        
-        $sql = $_global_conf["sql"];
-		$db = $sql["db"];
-		
-        $c = new mysqli(
-                $sql["server"],
-                $sql["user"],
-                $sql["password"]
-        );
 
-        if(@$c->connection_error){
 
-            $result["key"] = "ConnectionFail";
-        } else {
-            
-            if($sqlRes = $c->query("select count(*) as count from $db.users
-                where cid='" . $loginData->cid . "' and
-                password='" . md5($loginData->password) . "'")){
-                
-                $fetchedRes = $sqlRes->fetch_assoc();
-                
-                if($fetchedRes["count"] == 1){
-                    $result["key"] = "OK";
-                    $result["success"] = true;
+                if($sqlRes = $c->query("select id from $db.users
+                        where cid='" . $loginData->cid . "' and
+                        password='" . md5($loginData->password) . "'")){
+
+                        if($sqlRes->num_rows == 1){
+
+                                $fetchedRes = $sqlRes->fetch_assoc();
+
+                                $result["key"] = "OK";
+                                $result["success"] = true;
+                                $result["detail"] = $fetchedRes["id"];
+                        } else {
+
+                                $result["key"] = "UserNotFound";
+                        }
+
+                        $sqlRes->free_result();
+
                 } else {
-                    $result["key"] = "UserNotFound";
+
+                        $result["key"] = "FetchFail";
+                        $result["detail"] = $c->error;
                 }
-                
-                $sqlRes->free_result();
-                
-            } else {
-                
-                $result["key"] = "FetchFail";
-                $result["detail"] = $c->error;
-            }
-            
-            $c->close();
-        }
-        
+
         return $result;
     }
+
+
+
+    if(@$c->connection_error){
+
+        $result["key"] = "ConnectionFail";
+    } else {
+
+            if($action){
+                    switch($action){
+                            case 'userInfo':
+
+                            break;
+                            default:
+                                    $response["key"] = "invalidAction";
+                                    $response["detail"] = $action;
+                            break;
+                    }
+            } else {
+                    $loginData = $requestBody;
+                    $userCheckResult = checkUserLoginAndGetID($loginData);
+
+                    $response["success"] = true;
+                    $response["key"] = "OK";
+            }
+    }
 	
-    $validationResult = getUserData($request);
-    
-    $response = $validationResult;
-    
     echo json_encode($response);
 ?>

@@ -1,6 +1,14 @@
+<style>
+    #ticketPageControls {
+        margin-bottom:20px;
+    }
+</style>
 <h3 class="pageContentHeadline">Tickets - Übersicht</h3>
 <div id="ticketOverview" class="container">
 	<p>
+        <div id="ticketPageControls">
+            <button ng-click="refresh()">Aktualisieren</button>
+        </div>
 	<div class="ticketWidgets">
 		<span id="ticketCount">Tickets : 
 			<ticket-count></ticket-count>

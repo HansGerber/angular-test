@@ -2,46 +2,64 @@ app.factory("userService", function($rootScope, $http) {
 	
 	return {
 		
-		sessionKey: 'user',
-	
-		login: function(user, success, error){
+		login: function(credentials, success, error){
 
                     if(this.isLoggedIn() === false){
                         
 			$http.post(
 				BKCleanApi.makePath("user/"),
-				user
+				credentials
 			).then(
 				function(response){
-                                    $rootScope.$emit("userService.login", "success");
-                                    success(response);
+						if(response.data.success){
+							sessionStorage.setItem("loggedin", 1);
+							$rootScope.$emit("userService.login", "success");
+							success(response);
+						} else {
+							$rootScope.$emit("userService.login", "error");
+							error(response);
+						}
 				},
 				function(response){
-                                    $rootScope.$emit("userService.login", "error");
-                                    error(response);
+						$rootScope.$emit("userService.login", "error");
+						error(response);
 				}
 			);
                     }
 		},
 
 		isLoggedIn: function(){
-			
-			if(sessionStorage.getItem(this.sessionKey)){
-				return true;
-			}
-			return false;
+			return sessionStorage.getItem("loggedin") !== null;
 		},
 		
 		logout: function() {
                     if(this.isLoggedIn() === true){
                         $rootScope.$emit("userService.logout", "success");
-			sessionStorage.removeItem(this.sessionKey);
+						sessionStorage.removeItem("loggedin");
                     }
 		},
-                
-                storeUserInSession: function(userData){
-                    sessionStorage.setItem(this.sessionKey, userData);
-                }
+		
+		getUserInfo: function(success, error) {
+			if(this.isLoggedIn()){
+				$http.get(
+					BKCleanApi.makePath("user/", "userInfo")
+				).then(
+					function(result) {
+						console.log("userService.getUserInfo() SUCCESS ", result);
+						success(result);
+					},
+					function(result) {
+						console.log("userService.getUserInfo() ERROR ", result);
+						error(result);
+					}
+				);
+			} else {
+				error({
+					success: false,
+					key: "notLoggedIn"
+				});
+			}
+		}
 	
 	}
 });

@@ -1,7 +1,7 @@
 app.directive('characterLimit', function() {
     
 	return {
-		link: function(scope, element, attrs){
+		link: function(element, attrs){
 			
 			var el = angular.element(element), maxlength = 255;
 			
@@ -26,7 +26,7 @@ app.directive('ticketCount', function() {
     
   return {
     controller: ['$scope', '$http', function ticketCounterController($scope, $http) {
-        
+		
         $scope.countResult = "loading ...";
         
         if("BKCleanApi" in window){
