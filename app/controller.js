@@ -110,6 +110,7 @@ controllers.login = function($scope, $location, userService, deepLinkService) {
 						userService.login(
 							user,
 							function(response) {
+                                                            console.log(response.data.success);
 								if(response.data.success === true){
 									switch(response.data.key){
 										case 'OK':

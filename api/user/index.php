@@ -74,9 +74,8 @@
             } else {
                     $loginData = $requestBody;
                     $userCheckResult = checkUserLoginAndGetID($loginData);
-
-                    $response["success"] = true;
-                    $response["key"] = "OK";
+                    
+                    $response = $userCheckResult;
             }
     }
 	

@@ -11,65 +11,61 @@
         "detail" => ""
     );
     
+    $sql = $_global_conf["sql"];
+    $db = $sql["db"];
+    $c = new mysqli(
+                    $sql["server"],
+                    $sql["user"],
+                    $sql["password"]
+    );
+    
     function getTicketCount($filter = ""){
-        
-        global $_global_conf;
+        global $c, $db;
         $result = array("success" => false, "key" => "", "detail" => "");
-        
-        $sql = $_global_conf["sql"];
-	$db = $sql["db"];
-	
-	$c = new mysqli(
-		$sql["server"],
-		$sql["user"],
-		$sql["password"]
-	);
-	
-	if(@$c->connection_error){
             
-            $result["key"] = "ConnectionFail";
-	} else {
-            
-            if($res = $c->query("select count(*) as ticketCount from $db.tickets".($filter ? " where ".$filter : ""))){
-                
-                $result["success"] = true;
-                $result["detail"] = $res->fetch_assoc();
-                
-                $res->free_result();
-                
-            } else {
-                
-                $result["key"] = "InsertionFail";
-                $result["detail"] = $c->error;
-            }
-            
-            $c->close();
+        if($res = $c->query("select count(*) as ticketCount from $db.tickets".($filter ? " where ".$filter : ""))){
+
+            $result["success"] = true;
+            $result["detail"] = $res->fetch_assoc();
+
+            $res->free_result();
+
+        } else {
+
+            $result["key"] = "InsertionFail";
+            $result["detail"] = $c->error;
         }
         
         return $result;
     }
     
-    if($action){
-        
-        switch($action){
-            case 'ticketCount':
-                $dbResult = getTicketCount();
-                
-                $response["success"] = $dbResult["success"];
-                $response["key"] = $dbResult["key"];
-                $response["detail"] = $dbResult["detail"];
-            break;
+    if(@$c->connection_error){
             
-            default:
-                
-                $response["key"] = $dbResult["unknownAction"];
-            break;
-        }
-
-        
+            $result["key"] = "ConnectionFail";
     } else {
+    
+        if($action){
+
+            switch($action){
+                case 'ticketCount':
+                    $dbResult = getTicketCount();
+
+                    $response = $dbResult;
+                break;
+
+                default:
+
+                    $response["key"] = $dbResult["unknownAction"];
+                break;
+            }
+
+
+        } else {
+
+            $response["key"] = "noPostData";
+        }
         
-        $response["key"] = "noPostData";
+        $c->close();
     }
     
     echo json_encode($response);

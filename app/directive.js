@@ -75,11 +75,11 @@ app.directive('naviUserSnippet', function() {
             }
             
             $rootScope.$on('userService.login', function(event, loginResult){
-                
-                $scope.tmpl = '<a href="#/my-profile">Mein Profil</a>' +
-                    '<a href="#/tickets">Tickets</a>' +
-                    '<a href="#/logout">Logout</a>';
-            
+                if(loginResult === "success"){
+                    $scope.tmpl = '<a href="#/my-profile">Mein Profil</a>' +
+                        '<a href="#/tickets">Tickets</a>' +
+                        '<a href="#/logout">Logout</a>';
+                }
             });
             
             $rootScope.$on('userService.logout', function(event, logoutResult){
